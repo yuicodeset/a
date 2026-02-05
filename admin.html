@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Specific overrides for admin page layout */
+        body {
+            display: block;
+            overflow-y: auto;
+            padding: 0;
+            height: auto;
+            min-height: 100vh;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <header class="header-actions">
+            <h1>Captured Gallery</h1>
+            <a href="index.html" class="nav-btn">← Back to Home</a>
+        </header>
+
+        <div id="gallery" class="gallery-grid">
+            <!-- Images will be loaded here -->
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <button id="clear-data" class="danger-btn">Delete All Data</button>
+        </div>
+    </div>
+
+    <script>
+        // Inline script for admin logic to keep it independent
+        const gallery = document.getElementById('gallery');
+        const clearDataBtn = document.getElementById('clear-data');
+
+        function renderGallery() {
+            gallery.innerHTML = '';
+            const images = JSON.parse(localStorage.getItem('captured_faces') || '[]');
+
+            if (images.length === 0) {
+                gallery.innerHTML = '<p style="text-align:center; width:100%; color:#888; grid-column: 1/-1; padding: 50px;">No images captured via simulation yet.</p>';
+                return;
+            }
+
+            images.reverse().forEach(item => { // Show newest first
+                const wrapper = document.createElement('div');
+                wrapper.className = 'glass';
+                wrapper.style.padding = '10px';
+
+                const img = document.createElement('img');
+                img.src = item.img;
+                img.className = 'gallery-item';
+                img.style.width = '100%';
+                img.style.display = 'block';
+
+                const date = document.createElement('div');
+                date.textContent = item.date;
+                date.style.marginTop = '10px';
+                date.style.fontSize = '0.8rem';
+                date.style.color = '#ccc';
+                date.style.textAlign = 'center';
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(date);
+                gallery.appendChild(wrapper);
+            });
+        }
+
+        clearDataBtn.addEventListener('click', () => {
+            if (confirm("Are you sure you want to delete ALL captured photos? This cannot be undone.")) {
+                localStorage.removeItem('captured_faces');
+                renderGallery();
+            }
+        });
+
+        // Initialize
+        renderGallery();
+    </script>
+</body>
+
+</html>

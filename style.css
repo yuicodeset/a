@@ -1,0 +1,354 @@
+:root {
+    --bg-color: #0d0d0d;
+    --text-main: #ffffff;
+    --text-muted: #888888;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --accent: #ffffff;
+    --danger: #ff4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Background Map */
+.background-map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.background-map svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Glassmorphism Classes */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-header {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+/* Layout */
+.app-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    padding: 5px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    background: var(--accent);
+    color: var(--bg-color);
+}
+
+.control-panel {
+    width: 90%;
+    max-width: 420px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Centering is handled by body flex */
+}
+
+h1 {
+    font-weight: 300;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper .icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+}
+
+input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    padding: 15px 15px 15px 45px;
+    border-radius: 12px;
+    color: var(--text-main);
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--accent);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Connector Line for Inputs */
+.input-group:first-of-type {
+    position: relative;
+}
+
+.input-group:first-of-type::after {
+    content: '';
+    position: absolute;
+    left: 23px;
+    /* Align with icon center */
+    top: 55px;
+    /* Start below the first input icon */
+    height: 40px;
+    /* Span to next input */
+    width: 2px;
+    background: repeating-linear-gradient(to bottom, var(--text-muted) 0, var(--text-muted) 4px, transparent 4px, transparent 8px);
+    z-index: 0;
+    opacity: 0.5;
+}
+
+.primary-btn {
+    margin-top: 15px;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.primary-btn:active {
+    transform: scale(0.98);
+}
+
+.status-message {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.hidden-tools {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Admin Panel */
+.admin-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.admin-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#close-admin {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.gallery-item {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+}
+
+.danger-btn {
+    margin: 20px;
+    padding: 10px 20px;
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.secret-trigger {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    z-index: 999;
+}
+
+/* Fake Map Controls */
+.map-controls {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 5;
+}
+
+.map-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(5px);
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.map-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.location-marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: rgba(66, 133, 244, 0.8);
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 10px rgba(66, 133, 244, 0.2);
+    z-index: 1;
+    pointer-events: none;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 20px rgba(66, 133, 244, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
+    }
+}
